@@ -183,13 +183,12 @@ function loadImg() {
     window.addEventListener("resize", function () {Init()}, false);  
     
     function Init() {
-        if (imgWidth > imgHeight) {
+        if (imgWidth > imgHeight && imgWidth > window.innerWidth) {
             canvas.style.width = window.innerWidth+"px";
             canvas.style.height = "auto"; 
         }
-        if (imgWidth < imgHeight) {
+        if (imgWidth < imgHeight && imgHeight > window.innerHeight) {
             canvas.style.height = (window.innerHeight-48)+"px";
-
         }
     }
     
