@@ -97,7 +97,7 @@
 <body>
     <div id="wrapper">
         <header class="header">
-        <span class="title">PhotoEditor-load+save+delat+adaptive screen </span>
+        <span class="title">PhotoEditor-load+save+delat+adaptive screen</span>
         
         <span id="viewiAngrea" class="viewiAngrea"></span>
         <span id="sizeImg" class="sizeImg"></span>
@@ -179,7 +179,7 @@ function loadImg() {
 
     canvas.style.height = imgPreloadHeight+"px";
     document.getElementById("editoImg").append(canvas);
-    /*
+    
     window.addEventListener("resize", function () {Init()}, false);  
     
     function Init() {
@@ -192,7 +192,7 @@ function loadImg() {
             canvas.style.height = (window.innerHeight-48)+"px";
         }
     }
-    */
+    
     let canvasResult = document.getElementById("canvasResult").getContext("2d");
     canvasResult.drawImage(img,0,0);
 }  
