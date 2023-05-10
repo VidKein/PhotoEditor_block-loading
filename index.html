@@ -132,34 +132,37 @@ let pageWidth = window.innerWidth,
     pageHeight = window.innerHeight,
     viewiAngrea = document.getElementById("viewiAngrea"),
     sizeImg = document.getElementById("sizeImg");
-if (typeof pageWidth != "number") {
-  if (document.compatMode == "CSS1Compat") {
-     pageWidth = document.documentElement.clientWidth;
-     pageHeight = document.documentElement.clientHeight;
-     } else {
-     pageWidth = document.body.clientWidth;
-     pageHeight = document.body.clientHeight;
-     }
-  }
+    if (typeof pageWidth != "number") {
+      if (document.compatMode == "CSS1Compat") {
+         pageWidth = document.documentElement.clientWidth;
+         pageHeight = document.documentElement.clientHeight;
+         } else {
+         pageWidth = document.body.clientWidth;
+         pageHeight = document.body.clientHeight;
+         }
+    }
+
 
 
 /*Load imagen*/
 let img = new Image();
 document.getElementById('fileInput').addEventListener('change', function() {    
-    if (this.files && this.files[0]) {             
+  if (this.files && this.files[0]) {             
       img.src = URL.createObjectURL(this.files[0]);      
       img.onload = loadImg;
-    }
+  }
   });
 
 /*constructor canvas*/
 let canvas = document.createElement('canvas');
 function loadImg() { 
+
     /*Info windows*/
     viewiAngrea.innerHTML = "<span>Viewing area: </span>"+pageWidth+"x"+pageHeight+"рх"; 
     /*Info imagen*/
     let imgWidth = img.width,
         imgHeight = img.height,
+        imgPreloadWidth,
         imgPreloadHeight;
         sizeImg.innerHTML = "<span>Image size: </span>"+imgWidth+"x"+imgHeight+"рх";  
 
@@ -174,22 +177,32 @@ function loadImg() {
 
     if (imgHeight <= pageHeight) {
         imgPreloadHeight = imgHeight;
+        imgPreloadWidth = imgWidth;
     }else{
-        imgPreloadHeight = pageHeight-48;
+        imgPreloadHeight = pageHeight-48;  
+        imgPreloadWidth = imgPreloadHeight*(imgWidth/imgHeight);          
     }
-
+    
+    canvas.style.width = imgPreloadWidth+"px";
     canvas.style.height = imgPreloadHeight+"px";
+    
     document.getElementById("editoImg").append(canvas);
     
     window.addEventListener("resize", function () {Init()}, false);  
-    
+ 
     function Init() {
-        if (imgWidth > imgHeight && imgWidth > window.innerWidth && imgHeight > window.innerHeight) {
-            canvas.style.width = window.innerWidth+"px";
-            canvas.style.height = "auto"; 
-        }
+      if (imgWidth > imgHeight) {
+        if (imgPreloadWidth > window.innerWidth) {
+            canvas.style.width = "auto";
+            canvas.style.height = (window.innerHeight-48)+"px";
+        } else {
+          canvas.style.width = imgPreloadWidth+"px";
+          canvas.style.height = imgPreloadHeight+"px";
+        } 
+      }
 
-        if (imgWidth < imgHeight && imgHeight > window.innerHeight) {
+        if (imgWidth < imgHeight) {
+            canvas.style.width = "auto";         
             canvas.style.height = (window.innerHeight-48)+"px";
         }
     }
