@@ -174,14 +174,34 @@ function loadImg() {
     canvas.id = "canvasResult";
     canvas.width = imgWidth;
     canvas.height = imgHeight;
-
-    if (imgHeight <= pageHeight) {
-        imgPreloadHeight = imgHeight;
-        imgPreloadWidth = imgWidth;
-    }else{
-        imgPreloadHeight = pageHeight-48;  
-        imgPreloadWidth = imgPreloadHeight*(imgWidth/imgHeight);          
+    if(imgWidth > imgHeight){/*horizontal img*/
+      if (pageWidth >= pageHeight) {/*horizontal screen*/
+        if (imgHeight <= pageHeight) {
+           imgPreloadHeight = imgHeight;
+           imgPreloadWidth = imgWidth;
+        }else{
+           imgPreloadHeight = pageHeight-48;  
+           imgPreloadWidth = imgPreloadHeight*(imgWidth/imgHeight);
+        } 
+      } else {/*vertical screen*/
+        if (imgWidth <= pageWidth) {
+          imgPreloadHeight = imgHeight;
+          imgPreloadWidth = imgWidth;
+        } else {
+          imgPreloadWidth = pageWidth;
+          imgPreloadHeight = imgPreloadWidth*(imgHeight/imgWidth);
+        }
+      }
+    }else{/*vertical img*/
+      if (imgHeight <= pageHeight) {
+           imgPreloadHeight = imgHeight;
+           imgPreloadWidth = imgWidth;
+       }else{
+           imgPreloadHeight = pageHeight-48;  
+           imgPreloadWidth = imgPreloadHeight*(imgWidth/imgHeight);          
+       }
     }
+    
     
     canvas.style.width = imgPreloadWidth+"px";
     canvas.style.height = imgPreloadHeight+"px";
